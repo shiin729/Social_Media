@@ -6,14 +6,11 @@
     <title>Ribbon</title>
 {% endblock title %}
 
-<<<<<<< HEAD
-{% load static %}
-=======
-{% block style %}
-    <link rel="stylesheet" href="{% static 'content/base.css' %}">
-{% endblock style %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock styles %}
 
->>>>>>> 05869b2c4a55c4ede95234c18b00db36ebf6644c
+
 {% block content %}
     <div>
 
@@ -30,7 +27,12 @@
                         </div>
                         <button class="follow"><h3>follow</h3></button>
                     </div>
-                    <div class="post_image"></div>
+                    <div>
+                        <h2>{{ post.title }}</h2>
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="Post Image"style="width: 100%; height: auto;" class="post_image">
+                        {% endif %}
+                    </div>
                     <div class="action">
                         <div class="icon_left">
                             <div class="icon"></div>
@@ -40,11 +42,7 @@
                         <div class="icon"></div>
                     </div>
                     <div>
-                        <h2>{{ post.title }}</h2>
-                        {% if post.image %}
-                            <img src="{{ post.image.url }}" alt="Post Image">
-                        {% endif %}
-                        <h3>{{ post.text }}</h3>
+                        <h3>{{ post.content }}</h3>
                     </div>
                   </div>
                 </div>
