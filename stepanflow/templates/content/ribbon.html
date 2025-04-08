@@ -1,9 +1,14 @@
 {% extends "content/base.html" %}
 
+{% load static %}
+
 {% block title %}
-    Ribbon
+    <title>Ribbon</title>
 {% endblock title %}
 
+{% block style %}
+    <link rel="stylesheet" href="{% static 'content/base.css' %}">
+{% endblock style %}
 
 {% block content %}
     <div>
