@@ -1,0 +1,47 @@
+{% extends "content/base.html" %}
+
+{% block title %}
+    Ribbon
+{% endblock title %}
+
+
+{% block content %}
+    <div>
+
+        {% for post in all_posts %}
+            <div class="post_back">
+                <div class="container_post">
+                    <div class="head_post">
+                        <div class="info_user">
+                            <div class="avatar"></div>
+                            <div class="name_user">
+                                <h4>{{ post.user.username }}</h4>
+                                <h3>@Username</h3>
+                            </div>
+                        </div>
+                        <button class="follow"><h3>follow</h3></button>
+                    </div>
+                    <div class="post_image"></div>
+                    <div class="action">
+                        <div class="icon_left">
+                            <div class="icon"></div>
+                            <div class="icon"></div>
+                            <div class="icon"></div>
+                        </div>
+                        <div class="icon"></div>
+                    </div>
+                    <div>
+                        <h2>{{ post.title }}</h2>
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="Post Image">
+                        {% endif %}
+                        <h3>{{ post.text }}</h3>
+                    </div>
+                  </div>
+                </div>
+        {% endfor %}
+
+    </div>    
+{% endblock content %}
+
+
