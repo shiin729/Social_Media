@@ -5,6 +5,11 @@ from .models import Post
 def ribbon(request):
     all_posts = Post.objects.all()
     
+    
+    
+    
+    
+    
     context = {
         'all_posts': all_posts,
     }

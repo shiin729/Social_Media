@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "stepanflow",
+    "azamat",
     "widget_tweaks",
     'pages',
     'django.contrib.admin',

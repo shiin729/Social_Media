@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from pages.views import home_page,register_page,logout_page,login_page
+from stepanflow.views import ribbon
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -26,4 +27,5 @@ urlpatterns = [
     path('register/', register_page,name = 'register'),
     path('logout/', logout_page,name = 'logout'),
     path('login/', login_page,name = 'login'),
+    path('flow', ribbon,name = 'ribbon'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

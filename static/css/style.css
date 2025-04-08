@@ -1,0 +1,82 @@
+.post_back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#F6F6F6;
+    width: 550px;
+    height: 765px;
+    border-radius: 20px;
+}
+.container_post{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+}
+.avatar{
+    background-color: black;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+h2{
+    font-family: "Urbanist", sans-serif;
+    margin: 0px;
+}
+h3{
+    font-family: "Urbanist", sans-serif;
+    font-size: 13px;
+    margin: 0px;
+}
+h4{
+    font-family: "Urbanist", sans-serif;
+    font-size: 20px;
+    margin: 0px;
+}
+.info_user{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.name_user h3,h4{
+    margin: 0px;
+}
+.name_user h3{
+    color:  #626262;
+}
+.follow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: white;
+    width: 100px;
+    height: 35px;
+    border-radius: 50px;
+    border: 2px solid black;
+}
+.head_post{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.post_image{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 460px;
+    background-color: black;
+    border-radius: 15px;
+}
+.icon{
+    background-color: black;
+    width: 36px;
+    height: 36px;
+}
+.action{
+    display: flex;
+    justify-content: space-between;
+}
+.icon_left{
+    display: flex;
+    gap: 15px;
+}
