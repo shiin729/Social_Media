@@ -19,6 +19,7 @@ from django.urls import path
 from pages.views import home_page,register_page,logout_page,login_page
 from django.conf.urls.static import static
 from django.conf import settings
+from azamat.views import profile, delete_avatar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,6 @@ urlpatterns = [
     path('register/', register_page,name = 'register'),
     path('logout/', logout_page,name = 'logout'),
     path('login/', login_page,name = 'login'),
+    path('profile/', profile, name='profile'),
+    path('delete-avatar/', delete_avatar, name='delete_avatar'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
