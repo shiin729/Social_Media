@@ -57,7 +57,17 @@
             <img src="{{ user.profile.avatar.url }}" class="rounded-circle mb-3" alt="User Profile" width="120">
             <h5>{{user.first_name}} {{user.last_name}}</h5>
             <p class="text-muted">Web Developer</p>
-            <a href="{% url 'profile' %}" class="btn btn-primary btn-sm">Edit Profile</a>
+            <ul>
+              <li>
+                <a href="{% url 'profile' %} ">My Profile</a>
+              </li>
+              <li>
+                <a href="{% url 'friends' %}">Friends</a>
+              </li>
+              <li>
+                <a href="">Group</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
