@@ -5,7 +5,7 @@ from .models import Post
 def ribbon(request):
     all_posts = Post.objects.all()
     
-    context = {
+    
+    return render(request, 'content/ribbon.html', context = {
         'all_posts': all_posts,
-    }
-    return render(request, 'content/ribbon.html', context)
+    })
