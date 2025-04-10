@@ -39,7 +39,7 @@
                   <a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a>
                 </li>
                 <li class="nav-item">
-                  <span class="navbar-text text-white">Hi, {{ request.user.username }}</span>
+                  <span class="navbar-text text-white">Hi, {{ user.first_name }}</span>
                 </li>
               {% else %}
                 <li class="nav-item">
