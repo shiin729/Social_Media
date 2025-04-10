@@ -27,12 +27,18 @@
     const avatarInput = document.getElementById('avatarInput');
     const avatarPreview = document.getElementById('avatarPreview');
 
+<<<<<<< HEAD
+        <script>
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarPreview = document.getElementById('avatarPreview');
+=======
     avatarInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
             avatarPreview.src = URL.createObjectURL(file);
         }
     });
+>>>>>>> 2e6780057d60d768dfb2a30f7693243ad7d90e93
 
     const deleteAvatarButton = document.getElementById('deleteAvatarButton');
     deleteAvatarButton.addEventListener('click', () => {

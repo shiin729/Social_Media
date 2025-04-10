@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from pages.views import home_page,register_page,logout_page,login_page
+from stepanflow.views import ribbon
 from django.conf.urls.static import static
 from django.conf import settings
 from azamat.views import profile, delete_avatar
@@ -29,5 +30,9 @@ urlpatterns = [
     path('login/', login_page,name = 'login'),
     path('profile/', profile, name='profile'),
     path('delete-avatar/', delete_avatar, name='delete_avatar'),
+<<<<<<< HEAD
+    path('flow', ribbon,name = 'ribbon'),
+=======
     path('chat/', include('chat.urls')),
+>>>>>>> 2e6780057d60d768dfb2a30f7693243ad7d90e93
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
