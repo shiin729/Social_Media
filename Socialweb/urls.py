@@ -30,9 +30,6 @@ urlpatterns = [
     path('login/', login_page,name = 'login'),
     path('profile/', profile, name='profile'),
     path('delete-avatar/', delete_avatar, name='delete_avatar'),
-<<<<<<< HEAD
     path('flow', ribbon,name = 'ribbon'),
-=======
     path('chat/', include('chat.urls')),
->>>>>>> 2e6780057d60d768dfb2a30f7693243ad7d90e93
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
