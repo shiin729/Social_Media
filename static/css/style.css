@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
     background-color:#F6F6F6;
     width: 550px;
     height: 765px;
@@ -10,6 +11,7 @@
 .container_post{
     display: flex;
     flex-direction: column;
+    border: 2px solid #000000;
     gap: 20px;
     width: 80%;
 }

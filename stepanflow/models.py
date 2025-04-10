@@ -4,7 +4,7 @@ from azamat.models import Profile
 
 # Create your models here.
 class Post(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     content = models.TextField()
