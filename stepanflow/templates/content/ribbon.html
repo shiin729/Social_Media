@@ -14,18 +14,19 @@
 {% block content %}
     <div>
 
+        
         {% for post in all_posts %}
             <div class="post_back">
                 <div class="container_post">
                     <div class="head_post">
                         <div class="info_user">
                             <div class="avatar">
-                                {% if post.profile.avatar %}
-                                    <img src="{{ post.profile.avatar.url }}" alt="Avatar">
+                                {% if post.user.profile.avatar %}
+                                    <img src="{{ post.user.profile.avatar.url }}" alt="Avatar" class="avatar">
                                 {% endif %}
                             </div>
                             <div class="name_user">
-                                <h4>{{ post.profile.user.username }}</h4>
+                                <h4>{{ post.user.username }}</h4>
                                 <h3>@Username</h3>
                             </div>
                         </div>
