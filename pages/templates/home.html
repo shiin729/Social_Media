@@ -27,19 +27,19 @@
             <a class="nav-link text-white" href="#">Messages</a>
           </li>
           {% if request.user.is_authenticated %}
-            <li class="nav-item">
-              <a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a>
-            </li>
-            <li class="nav-item">
-              <span class="navbar-text text-white">Hi, {{ request.user.username }}</span>
-            </li>
+          <li class="nav-item">
+            <a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a>
+          </li>
+          <li class="nav-item">
+            <span class="navbar-text text-white">Hi, {{ user.first_name }}</span>
+          </li>
           {% else %}
-            <li class="nav-item">
-              <a href="{% url 'register' %}" class="btn btn-success">Register</a>
-            </li>
-            <li class="nav-item">
-              <a href="{% url 'login' %}" class="btn btn-primary">Log In</a>
-            </li>
+          <li class="nav-item">
+            <a href="{% url 'register' %}" class="btn btn-success">Register</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'login' %}" class="btn btn-primary">Log In</a>
+          </li>
           {% endif %}
         </ul>
       </div>
@@ -54,10 +54,10 @@
       <div class="col-md-3">
         <div class="card shadow-sm">
           <div class="card-body text-center">
-            <img src="https://via.placeholder.com/150" class="rounded-circle mb-3" alt="User Profile" width="120">
-            <h5>John Doe</h5>
+            <img src="{{ user.profile.avatar.url }}" class="rounded-circle mb-3" alt="User Profile" width="120">
+            <h5>{{user.first_name}} {{user.last_name}}</h5>
             <p class="text-muted">Web Developer</p>
-            <a href="#" class="btn btn-primary btn-sm">Edit Profile</a>
+            <a href="{% url 'profile' %}" class="btn btn-primary btn-sm">Edit Profile</a>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@
         <!-- Create Post -->
         <div class="card mb-4">
           <div class="card-body">
-            <textarea class="form-control" rows="3" placeholder="What's on your mind, John?"></textarea>
+            <textarea class="form-control" rows="3" placeholder="What's on your mind, {{user.first_name}}?"></textarea>
             <button class="btn btn-primary mt-3">Post</button>
           </div>
         </div>
