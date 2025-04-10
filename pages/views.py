@@ -35,3 +35,5 @@ def login_page(request):
         form = AuthenticationForm()
     return render(request,'login.html',{'form':form})
 
+def friends_page(request):
+    return render(request,'friends.html')
