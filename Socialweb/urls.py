@@ -31,6 +31,6 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('friends/', friends_page, name='friends'),
     path('delete-avatar/', delete_avatar, name='delete_avatar'),
-    path('flow/', ribbon,name = 'ribbon'),
+    path('flow', ribbon,name = 'ribbon'),
     path('chat/', include('chat.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
