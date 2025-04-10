@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Profile</h1>
+    <img id="avatarPreview" src="{{ user.profile.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px; border-radius: 50%;">
+    <p>{{ user.username }}</p>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.avatar.label_tag }} 
+        <input type="file" id="avatarInput" name="avatar">
+        <br>
+        <button type="button" id="deleteAvatarButton">Удалить аватарку</button>
+        <br>
+        <button type="submit">Сохранить</button>
+    </form>
+
+        <script>
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarPreview = document.getElementById('avatarPreview');
+
+        avatarInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                avatarPreview.src = URL.createObjectURL(file);
+            }
+        });
+
+        const deleteAvatarButton = document.getElementById('deleteAvatarButton');
+        deleteAvatarButton.addEventListener('click', () => {
+            if (confirm('Вы уверены, что хотите удалить аватарку?')) {
+                fetch("{% url 'delete_avatar' %}", { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } })
+                    .then(response => {
+                        if (response.ok) {
+                            avatarPreview.src = '/media/avatars/default.jpg'; // Укажите путь к аватарке по умолчанию
+                        } else {
+                            alert('Не удалось удалить аватарку.');
+                        }
+                    });
+            }
+        });
+    </script>
+{% endblock %}
