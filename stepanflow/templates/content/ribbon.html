@@ -19,7 +19,9 @@
                     <div class="head_post">
                         <div class="info_user">
                             <div class="avatar">
-                                
+                                {% if post.profile.avatar %}
+                                    <img src="{{ post.profile.avatar.url }}" alt="Avatar">
+                                {% endif %}
                             </div>
                             <div class="name_user">
                                 <h4>{{ post.user.username }}</h4>
