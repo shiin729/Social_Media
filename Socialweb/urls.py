@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pages.views import home_page,register_page,logout_page,login_page,friends_page,other_profile, search_friends, createpost_page
+from pages.views import home_page,register_page,logout_page,login_page,friends_page,other_profile, search_friends
 from stepanflow.views import ribbon
 from django.conf.urls.static import static
 from django.conf import settings
