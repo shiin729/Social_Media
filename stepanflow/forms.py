@@ -6,11 +6,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'image', 'content']
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Enter post title'}),
-            'image': forms.ClearableFileInput(attrs={'multiple': True}),
-            'content': forms.Textarea(attrs={'placeholder': 'Enter post content'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Введите заголовок'}),
+            'image': forms.ClearableFileInput(),  # без multiple=True
+            'content': forms.Textarea(attrs={'placeholder': 'Введите текст поста'}),
         }
-
-
-
-
