@@ -37,3 +37,6 @@ def login_page(request):
 
 def friends_page(request):
     return render(request,'friends.html')
+
+def createpost_page(request):
+    return render(request,'createpost_page.html')
