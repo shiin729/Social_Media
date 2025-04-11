@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pages.views import home_page,register_page,logout_page,login_page
+from pages.views import home_page,register_page,logout_page,login_page,friends_page
 from stepanflow.views import ribbon
 from django.conf.urls.static import static
 from django.conf import settings
@@ -29,7 +29,8 @@ urlpatterns = [
     path('logout/', logout_page,name = 'logout'),
     path('login/', login_page,name = 'login'),
     path('profile/', profile, name='profile'),
+    path('friends/', friends_page, name='friends'),
     path('delete-avatar/', delete_avatar, name='delete_avatar'),
-    path('flow', ribbon,name = 'ribbon'),
+    path('flow/', ribbon,name = 'ribbon'),
     path('chat/', include('chat.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
