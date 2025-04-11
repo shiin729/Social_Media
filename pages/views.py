@@ -65,5 +65,5 @@ def other_profile(request, username):
 def search_friends(request):
     query = request.GET.get('q', '')
     users = User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query)).exclude(id=request.user.id)
-    users_data = [{'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'username': user.username, 'avatar': user.profile.avatar.url if user.profile.avatar else '/media/avatars/default.jpg'} for user in users]
+    users_data = [{'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'username': user.username, 'avatar': user.profile.avatar.url if user.profile.avatar else '/media/avatars/default.jpeg'} for user in users]
     return JsonResponse({'users': users_data})
