@@ -43,4 +43,5 @@ def friends_page(request):
     return render(request,'friends.html')
 
 def createpost_page(request):
+    form = Post(request.POST)
     return render(request,'createpost_page.html')
