@@ -10,3 +10,4 @@ class PostForm(forms.ModelForm):
             'image': forms.ClearableFileInput(),  # без multiple=True
             'content': forms.Textarea(attrs={'placeholder': 'Введите текст поста'}),
         }
+#asd
