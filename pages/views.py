@@ -2,9 +2,13 @@ from django.shortcuts import render,redirect
 from .form import CreateUserForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from stepanflow.models import Post
 
 def home_page(request):
-    return render(request,'home.html')
+    all_posts = Post.objects.all()
+    return render(request,'home.html', context = {
+        'all_posts': all_posts,
+    })
 
 def register_page(request):
     if request.method == "POST":
