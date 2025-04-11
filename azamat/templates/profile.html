@@ -4,6 +4,26 @@
 <div class=" d-flex flex-row justify-content-between align-items-center mb-4">
     <div class="col-md-3">
         <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <img src="{{ user.profile.avatar.url }}" class="rounded-circle mb-3" alt="User Profile" width="120">
+            <h5>{{user.first_name}} {{user.last_name}}</h5>
+            <p class="text-muted">Web Developer</p>
+            <ul>
+              <li>
+                <a href="{% url 'profile' %} ">My Profile</a>
+              </li>
+              <li>
+                <a href="{% url 'friends' %}">Friends</a>
+              </li>
+              <li>
+                <a href="">Group</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
         <div class="card-body text-center">
             <img id="avatarPreview" src="{{ user.profile.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px; border-radius: 50%;">
             <p>{{ user.first_name }} {{user.last_name}}</p>
