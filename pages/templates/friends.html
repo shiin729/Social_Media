@@ -71,7 +71,6 @@
             <div>
               <input type="text" id="searchInput" class="form-control" placeholder="Search for friends...">
               <div id="searchResults" class="mt-3">
-                  <!-- Здесь будут отображаться результаты поиска -->
               </div>
           </div>
         </div>
@@ -84,14 +83,10 @@
       searchInput.addEventListener('input', () => {
           const query = searchInput.value;
   
-          // Отправка AJAX-запроса на сервер
           fetch(`/friends/search/?q=${query}`)
               .then(response => response.json())
               .then(data => {
-                  // Очистка предыдущих результатов
                   searchResults.innerHTML = '';
-  
-                  // Отображение новых результатов
                   data.users.forEach(user => {
                       const userCard = `
                           <div class="card mt-2">
