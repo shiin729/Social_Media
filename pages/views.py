@@ -67,4 +67,5 @@ def search_friends(request):
     return JsonResponse({'users': users_data})
 
 def createpost_page(request):
+    form = Post(request.POST)
     return render(request,'createpost_page.html')

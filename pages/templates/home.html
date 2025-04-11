@@ -69,6 +69,9 @@
               <li>
                 <a href="">Group</a>
               </li>
+              <li>
+                <a href="{% url 'createpost'%}">CreatePost</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -84,43 +87,6 @@
             <button class="btn btn-primary mt-3">Post</button>
           </div>
         </div>
-
-        <!-- Post #1 -->
-        <!-- <div class="card mb-4">
-          <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h5 class="card-title mb-1">Alice Cooper</h5>
-                <p class="card-text text-muted">2 hours ago</p>
-              </div>
-              <button class="btn btn-sm btn-outline-secondary">Follow</button>
-            </div>
-            <p class="card-text mt-2">Excited to start a new project this week! #webdev #coding</p>
-            <div class="d-flex justify-content-start mt-2">
-              <button class="btn btn-sm btn-outline-primary me-2">Like</button>
-              <button class="btn btn-sm btn-outline-secondary">Comment</button>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- Post #2 -->
-        <!-- <div class="card mb-4">
-          <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h5 class="card-title mb-1">Jane Smith</h5>
-                <p class="card-text text-muted">5 hours ago</p>
-              </div>
-              <button class="btn btn-sm btn-outline-secondary">Follow</button>
-            </div>
-            <p class="card-text mt-2">Had an amazing day at the beach! ☀️🌊 #vacation #beachlife</p>
-            <div class="d-flex justify-content-start mt-2">
-              <button class="btn btn-sm btn-outline-primary me-2">Like</button>
-              <button class="btn btn-sm btn-outline-secondary">Comment</button>
-            </div>
-          </div>
-        </div> -->
-
         {% for post in all_posts %}
             <div class="post_back">
                 <div class="container_post">
