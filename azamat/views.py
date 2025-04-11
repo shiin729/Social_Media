@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import ProfileForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from .forms import PostForm
+from .models import Post
 
 def profile(request):
     if request.method == 'POST':
@@ -26,3 +28,15 @@ def delete_avatar(request):
         profile.save()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False}, status=400)
+
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('home')  # Перенаправление на главную страницу
+    else:
+        form = PostForm()
+    return render(request, 'create_post.html', {'form': form})

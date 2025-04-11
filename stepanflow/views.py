@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Post
+from azamat.models import Post
 
 # Create your views here.
 def ribbon(request):
