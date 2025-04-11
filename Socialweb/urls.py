@@ -20,7 +20,7 @@ from pages.views import home_page,register_page,logout_page,login_page,friends_p
 from stepanflow.views import ribbon
 from django.conf.urls.static import static
 from django.conf import settings
-from azamat.views import profile, delete_avatar
+from azamat.views import profile, delete_avatar, create_post
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +28,6 @@ urlpatterns = [
     path('register/', register_page,name = 'register'),
     path('logout/', logout_page,name = 'logout'),
     path('login/', login_page,name = 'login'),
-    path('createpost/', createpost_page,name = 'createpost'),
     path('profile/', profile, name='profile'),
     path('friends/', friends_page, name='friends'),
     path('delete-avatar/', delete_avatar, name='delete_avatar'),
@@ -36,4 +35,5 @@ urlpatterns = [
     path('chat/', include('chat.urls')),
     path('profile/<str:username>/', other_profile, name='other_profile'),
     path('friends/search/', search_friends, name='search_friends'),
+    path('createpost/', create_post, name='create_post'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

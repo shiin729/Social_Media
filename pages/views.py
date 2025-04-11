@@ -5,12 +5,12 @@ from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 from django.db.models import Q
-from stepanflow.models import Post
-from stepanflow.forms import PostForm
+from azamat.models import Post
+from azamat.forms import PostForm
 
 
 def home_page(request):
-    all_posts = Post.objects.all()
+    all_posts = Post.objects.all().order_by('-created_at')
     return render(request,'home.html', context = {
         'all_posts': all_posts,
     })
@@ -67,20 +67,3 @@ def search_friends(request):
     users = User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query)).exclude(id=request.user.id)
     users_data = [{'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'username': user.username} for user in users]
     return JsonResponse({'users': users_data})
-
-def createpost_page(request):
-    # posts = Post.objects.all()
-    # if request.method == 'GET':
-    #     posts = Post.objects.all()
-    # else:
-    #     posts = Post.objects.filter(user=request.user)
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():  # ПРИВОДИТЬ КОД К ЭТОМУ ПРИСЯЖНО!
-            post = form.save(commit=False)
-            post.user = request.user
-            post.save()
-            return redirect('/')  # Перенаправление
-    else:
-        form = PostForm()
-    return render(request, 'createpost_page.html', {'form': form})

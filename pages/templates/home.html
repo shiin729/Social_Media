@@ -98,14 +98,18 @@
                                 {% endif %}
                             </div>
                             <div class="name_user">
-                                <h4>{{ post.user.username }}</h4>
-                                <h3>@Username</h3>
+                                <h4>{{ post.user.first_name }} {{ post.user.last_name }}</h4>
+                                <h3>@{{ post.user.username }}</h3>
                             </div>
                         </div>
                         <button class="follow"><h3>follow</h3></button>
                     </div>
                     <div>
                         <h2>{{ post.title }}</h2>
+                        <div>
+                          <h3>{{ post.content }}</h3>
+                        </div>
+                        <p>{{ post.created_at }}</p>
                         {% if post.image %}
                             <img src="{{ post.image.url }}" alt="Post Image"style="width: 100%; height: auto;" class="post_image">
                         {% endif %}
@@ -118,12 +122,24 @@
                         </div>
                         <div class="icon"></div>
                     </div>
-                    <div>
-                        <h3>{{ post.content }}</h3>
-                    </div>
                   </div>
                 </div>
         {% endfor %}
+        {% comment %} {% for post in all_posts %}
+          <div class="post_back">
+              <div class="container_post">
+                  <div class="action">
+                      <p>{{ post.user.first_name }}</p>
+                      <p>{{ post.title }}<p>
+                      <p>{{ post.content }}</p>
+                      {% if post.image %}
+                          <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; height: auto;">
+                      {% endif %}
+                      <p>{{ post.created_at }}</p>
+                  </div>
+              </div>
+          </div>
+        {% endfor %} {% endcomment %}
 
 
       </div>
