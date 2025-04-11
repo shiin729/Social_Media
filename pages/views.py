@@ -45,21 +45,27 @@ def login_page(request):
     return render(request,'login.html',{'form':form})
 
 def friends_page(request):
+    # username = User.objects.all().get(username=username)
+    # user_id = User.objects.get(username=username).id
+    # user_avatar = User.objects.get(username=username).profile.avatar.url
+    # user_first_name = User.objects.get(username=username).first_name
+    # user_last_name = User.objects.get(username=username).last_name
     return render(request,'friends.html')
 
 def other_profile(request, username):
     username = User.objects.all().get(username=username)
+    user_id = User.objects.get(username=username).id
     user_avatar = User.objects.get(username=username).profile.avatar.url
     user_first_name = User.objects.get(username=username).first_name
     user_last_name = User.objects.get(username=username).last_name
     if username == request.user:
         return redirect('/my_profile')
-    return render(request,'other_profile.html', {'username':username, 'user_avatar':user_avatar, 'user_first_name':user_first_name, 'user_last_name':user_last_name})
+    return render(request,'other_profile.html', {'username':username, 'user_avatar':user_avatar, 'user_first_name':user_first_name, 'user_last_name':user_last_name, 'user_id':user_id})
 
 def search_friends(request):
     query = request.GET.get('q', '')
     users = User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query)).exclude(id=request.user.id)
-    users_data = [{'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name} for user in users]
+    users_data = [{'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'username': user.username} for user in users]
     return JsonResponse({'users': users_data})
 
 def createpost_page(request):

@@ -51,8 +51,8 @@
             <div class="col-md-3">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <img src="{{ user.profile.avatar.url }}" class="rounded-circle mb-3" alt="User Profile" width="120">
-                        <h5>{{user.first_name}} {{user.last_name}}</h5>
+                        <img src="{{ user_avatar }}" class="rounded-circle mb-3" alt="User Profile" width="120">
+                        <h5>{{user_first_name}} {{user_last_name}}</h5>
                         <p class="text-muted">Web Developer</p>
                         <ul>
                             <li>
@@ -89,12 +89,14 @@
                   searchResults.innerHTML = '';
                   data.users.forEach(user => {
                       const userCard = `
+                        <a href="/profile/${user.username}" class="text-decoration-none text-dark">
                           <div class="card mt-2">
                               <div class="card-body">
                                   <h5>${user.first_name} ${user.last_name}</h5>
                                   <a href="/add-friend/${user.id}/" class="btn btn-primary">Add Friend</a>
                               </div>
                           </div>
+                        </a>
                       `;
                       searchResults.innerHTML += userCard;
                   });
