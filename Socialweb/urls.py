@@ -35,5 +35,5 @@ urlpatterns = [
     path('chat/', include('chat.urls')),
     path('profile/<str:username>/', other_profile, name='other_profile'),
     path('friends/search/', search_friends, name='search_friends'),
-    path('createpost/', create_post, name='create_post'),
+    path('createpost/', create_post, name='createpost'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
