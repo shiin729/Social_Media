@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pages.views import home_page,register_page,logout_page,login_page,friends_page, other_profile, search_friends
+from pages.views import home_page,register_page,logout_page,login_page,friends_page,other_profile, search_friends, createpost_page
 from stepanflow.views import ribbon
 from django.conf.urls.static import static
 from django.conf import settings
@@ -28,7 +28,8 @@ urlpatterns = [
     path('register/', register_page,name = 'register'),
     path('logout/', logout_page,name = 'logout'),
     path('login/', login_page,name = 'login'),
-    path('my_profile/', profile, name='profile'),
+    path('createpost/', createpost_page,name = 'createpost'),
+    path('profile/', profile, name='profile'),
     path('friends/', friends_page, name='friends'),
     path('delete-avatar/', delete_avatar, name='delete_avatar'),
     path('flow/', ribbon,name = 'ribbon'),

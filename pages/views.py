@@ -5,9 +5,13 @@ from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 from django.db.models import Q
+from stepanflow.models import Post
 
 def home_page(request):
-    return render(request,'home.html')
+    all_posts = Post.objects.all()
+    return render(request,'home.html', context = {
+        'all_posts': all_posts,
+    })
 
 def register_page(request):
     if request.method == "POST":
@@ -55,3 +59,5 @@ def search_friends(request):
     users = User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query)).exclude(id=request.user.id)
     users_data = [{'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name} for user in users]
     return JsonResponse({'users': users_data})
+def createpost_page(request):
+    return render(request,'createpost_page.html')
