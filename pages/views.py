@@ -10,9 +10,20 @@ from azamat.forms import PostForm
 
 
 def home_page(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('home')  # Перенаправление на главную страницу
+    else:
+        form = PostForm()
     all_posts = Post.objects.all().order_by('-created_at')
     return render(request,'home.html', context = {
         'all_posts': all_posts,
+        'form': form,
+        'user': request.user,
     })
 
 def register_page(request):
@@ -59,7 +70,7 @@ def other_profile(request, username):
     user_first_name = User.objects.get(username=username).first_name
     user_last_name = User.objects.get(username=username).last_name
     if username == request.user:
-        return redirect('/my_profile')
+        return redirect('/profile')
     return render(request,'other_profile.html', {'username':username, 'user_avatar':user_avatar, 'user_first_name':user_first_name, 'user_last_name':user_last_name, 'user_id':user_id})
 
 def search_friends(request):

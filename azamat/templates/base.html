@@ -1,15 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block title %}
       <title>Document</title>
     {% endblock title %}
     {% block styles %}{% endblock styles %}
-    {% block scripts %}{% endblock scripts %}
+    {% block scripts %}
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              fade: 'fadeIn 1s ease-in-out',
+              slide: 'slideIn 0.5s ease-out',
+              pulseSlow: 'pulse 3s ease-in-out infinite'
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideIn: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              }
+            }
+          }
+        }
+      }
+  
+      let menuOpen = false;
+  
+      // Функция для переключения бургер-меню
+      function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const burgerIcon = document.getElementById('burger-icon');
+        const closeIcon = document.getElementById('close-icon');
+  
+        menu.classList.toggle('hidden');
+        
+        // Переключаем иконки бургер-меню
+        if (menuOpen) {
+          burgerIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        } else {
+          burgerIcon.classList.add('hidden');
+          closeIcon.classList.remove('hidden');
+        }
+  
+        menuOpen = !menuOpen;
+      }
+  
+      // Закрытие меню при клике по ссылке
+      function closeMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.add('hidden');
+        document.getElementById('burger-icon').classList.remove('hidden');
+        document.getElementById('close-icon').classList.add('hidden');
+        menuOpen = false;
+      }
+    </script>
+    {% endblock scripts %}
 </head>
 <body class="bg-gray-100 text-gray-900">
 

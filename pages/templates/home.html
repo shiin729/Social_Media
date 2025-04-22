@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Social Network</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
   <script>
     tailwind.config = {
       theme: {
@@ -65,53 +65,54 @@
 <body class="bg-gradient-to-tr from-indigo-100 via-white to-blue-100 min-h-screen font-sans text-gray-800">
 
   <!-- Navigation Bar -->
-  <nav class="bg-indigo-700 shadow-xl sticky top-0 z-50">
+  <nav class="bg-indigo-700 shadow sticky top-0 z-50 mb-10">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between text-white">
-      <a href="{% url 'home' %}" class="text-4xl font-extrabold tracking-wider hover:scale-105 transition-transform duration-300">SocialNetwork</a>
-      
-      <!-- Бургер-меню -->
-      <button class="md:hidden text-white" onclick="toggleMenu()">
-        <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      <a href="{% url 'home' %}" class="text-2xl font-extrabold tracking-wide hover:scale-105 transition-transform duration-300">SocialNetwork</a>
+
+      <!-- Бургер -->
+      <button class="md:hidden" onclick="toggleMenu()">
+        <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
         <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
 
-      <div class="hidden md:flex space-x-6 items-center text-lg">
+      <!-- Десктоп меню -->
+      <div class="hidden md:flex space-x-6 text-lg">
         <a href="{% url 'home' %}" class="hover:underline">Home</a>
         <a href="{% url 'profile' %}" class="hover:underline">Profile</a>
         <a href="#" class="hover:underline">Messages</a>
         {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-lg transition-all">Log Out</a>
-        <span class="ml-2 text-sm font-light">Hi, {{ user.first_name }}</span>
+        <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition">Log Out</a>
+        <span class="text-sm font-light ml-2">Hi, {{ user.first_name }}</span>
         {% else %}
-        <a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 px-5 py-2 rounded-lg transition-all">Register</a>
-        <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-lg transition-all">Log In</a>
+        <a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition">Register</a>
+        <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg transition">Log In</a>
         {% endif %}
       </div>
+    </div>
 
-      <!-- Mobile menu -->
-      <div id="mobile-menu" class="md:hidden hidden absolute top-0 left-0 w-full bg-indigo-700 p-4 space-y-4 text-center">
-        <a href="{% url 'home' %}" class="block text-white hover:underline" onclick="closeMenu()">Home</a>
-        <a href="{% url 'profile' %}" class="block text-white hover:underline" onclick="closeMenu()">Profile</a>
-        <a href="#" class="block text-white hover:underline" onclick="closeMenu()">Messages</a>
-        {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="block bg-red-500 hover:bg-red-600 px-5 py-2 rounded-lg transition-all text-white" onclick="closeMenu()">Log Out</a>
-        <span class="text-white text-sm font-light">Hi, {{ user.first_name }}</span>
-        {% else %}
-        <a href="{% url 'register' %}" class="block bg-green-500 hover:bg-green-600 px-5 py-2 rounded-lg transition-all text-white" onclick="closeMenu()">Register</a>
-        <a href="{% url 'login' %}" class="block bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-lg transition-all text-white" onclick="closeMenu()">Log In</a>
-        {% endif %}
-      </div>
+    <!-- Мобильное меню -->
+    <div id="mobile-menu" class="md:hidden hidden bg-indigo-700 px-4 py-3 space-y-2 text-white mb-10">
+      <a href="{% url 'home' %}" class="block">Home</a>
+      <a href="{% url 'profile' %}" class="block">Profile</a>
+      <a href="#" class="block">Messages</a>
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'logout' %}" class="block bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Log Out</a>
+      <p class="text-sm mt-2">Hi, {{ user.first_name }}</p>
+      {% else %}
+      <a href="{% url 'register' %}" class="block bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Register</a>
+      <a href="{% url 'login' %}" class="block bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">Log In</a>
+      {% endif %}
     </div>
   </nav>
 
   <!-- Main Layout -->
-  <div class="max-w-7xl mx-auto mt-10 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 animate-fade">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 animate-fade">
     <!-- Sidebar -->
-    <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 text-center animate-slide">
+    <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 text-center animate-slide h-fit relative sticky top-20">
       <img src="{{ user.profile.avatar.url }}" alt="User Profile" class="w-32 h-32 mx-auto rounded-full mb-4 border-4 border-indigo-500">
       <h2 class="text-2xl font-bold">{{ user.first_name }} {{ user.last_name }}</h2>
       <p class="text-indigo-600 mb-4">Web Developer</p>
@@ -125,24 +126,49 @@
 
     <!-- Main Feed -->
     <main class="md:col-span-6 sm:col-span-1 space-y-6 animate-fade">
-      <div class="bg-white p-6 rounded-2xl shadow-md">
-        <textarea class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition-all" rows="3" placeholder="What's on your mind, {{user.first_name}}?"></textarea>
-        <button class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-xl hover:bg-indigo-700 transition-all">Post</button>
+      <div class="bg-white p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="flex flex-col w-full relative h-50 rounded-xl p-4 border border-gray-300 focus:outline-solid transition-all duration-300 bg-white shadow-lg">
+            <input type="text-bold" name="title" id="title" class="pt-2 pb-2 pl-2 outline-none font-bold" placeholder="Enter your post title" required>
+            <textarea name="content" id="content" rows="6" class="mt-4 pl-2 pt-2 outline-none" placeholder="Write something interesting..." required></textarea>
+            <div class="flex flex-col w-10 h-10 hover:scale-110 transition-transform duration-300 absolute bottom-2 right-2 cursor-pointer">
+                <img src="{% static 'images/clip.svg' %}" alt="Upload Icon" class="w-10 h-10 mb-2 border border-gray-300 rounded-xl p-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl p-4 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer">
+            </div>
+          </div>
+          <div class="mt-6">
+            <button type="submit" class="w-full py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-all duration-500 transform hover:scale-105 shadow-md hover:shadow-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                Publish Post
+            </button>
+          </div>
+        </form>
       </div>
-
+      
       {% for post in all_posts %}
       <div class="bg-white p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300">
         <div class="flex items-center justify-between mb-4">
           <div class="flex items-center space-x-4">
             {% if post.user.profile.avatar %}
             <img src="{{ post.user.profile.avatar.url }}" alt="Avatar" class="w-14 h-14 rounded-full border-2 border-indigo-400">
+            {% else %}
+            <img src="{% static 'images/default.jpeg' %}" alt="Default Avatar" class="w-14 h-14 rounded-full border-2 border-indigo-400">
             {% endif %}
             <div>
-              <h4 class="font-semibold text-lg">{{ post.user.first_name }} {{ post.user.last_name }}</h4>
+              <a href='profile/{{ post.user.username }}'><h4 class="font-semibold text-lg">{{ post.user.first_name }} {{ post.user.last_name }}</h4></a>
               <span class="text-gray-500 text-sm">@{{ post.user.username }}</span>
             </div>
           </div>
-          <button class="bg-indigo-500 text-white px-4 py-2 rounded-full font-medium hover:bg-indigo-600 transition-all">Follow</button>
+          <div class="flex items-center space-x-2">
+            {% if post.user == user %}
+            <button class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all"><img src={% static 'images/delete1.svg' %} class="w-6 h-6"></button>
+            {% elif request.user.is_superuser %}
+            <button class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all"><img src={% static 'images/delete1.svg' %} class="w-6 h-6"></button>
+            <button class="bg-indigo-500 text-white px-2 py-2 rounded-full font-medium hover:bg-indigo-600 transition-all"><img src={% static 'images/add_friend.svg' %} class="w-6 h-6 pl-0.5"></button>
+            {% else %}
+            <button class="bg-indigo-500 text-white px-2 py-2 rounded-full font-medium hover:bg-indigo-600 transition-all"><img src={% static 'images/add_friend.svg' %} class="w-6 h-6 pl-0.5"></button>
+            {% endif %} 
+          </div>
         </div>
         <h3 class="text-xl font-bold mb-2 text-indigo-800">{{ post.title }}</h3>
         <p class="post-content text-gray-700 leading-relaxed break-words">
@@ -162,7 +188,7 @@
     </main>
 
     <!-- Notifications -->
-    <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 animate-slide">
+    <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 animate-slide h-fit sticky top-20">
       <h3 class="text-xl font-bold mb-4 text-indigo-700">Notifications</h3>
       <ul class="space-y-3 text-sm text-indigo-600">
         <li><a href="#" class="hover:underline">Alice Cooper started following you</a></li>
@@ -185,6 +211,5 @@
       +
     </button>
   </div>
-
 </body>
 </html>
