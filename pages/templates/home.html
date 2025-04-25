@@ -131,10 +131,10 @@
           {% csrf_token %}
           <div class="flex flex-col w-full relative h-50 rounded-xl p-4 border border-gray-300 focus:outline-solid transition-all duration-300 bg-white shadow-lg">
             <input type="text-bold" name="title" id="title" class="pt-2 pb-2 pl-2 outline-none font-bold" placeholder="Enter your post title" required>
-            <textarea name="content" id="content" rows="6" class="mt-4 pl-2 pt-2 outline-none" placeholder="Write something interesting..." required></textarea>
+            <textarea name="content" id="content" rows="6" class="resize-none mt-4 pl-2 pt-2 outline-none" placeholder="Write something interesting..." required></textarea>
             <div class="flex flex-col w-10 h-10 hover:scale-110 transition-transform duration-300 absolute bottom-2 right-2 cursor-pointer">
                 <img src="{% static 'images/clip.svg' %}" alt="Upload Icon" class="w-10 h-10 mb-2 border border-gray-300 rounded-xl p-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl p-4 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer">
+                <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer resize-none" />
             </div>
             <div id="preview">
               
