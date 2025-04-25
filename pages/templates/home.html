@@ -110,6 +110,7 @@
   </nav>
 
   <!-- Main Layout -->
+  {% if user.is_authenticated %}
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 animate-fade">
     <!-- Sidebar -->
     <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 text-center animate-slide h-fit relative sticky top-20">
@@ -150,16 +151,26 @@
           </div>
           <div class="flex items-center space-x-2">
             {% if post.user == user %}
-            <button class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all"><img src={% static 'images/delete1.svg' %} class="w-6 h-6"></button>
+            <form method="POST" action="{% url 'delete_post' post.id %}" class="inline">
+              {% csrf_token %}
+              <button class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all">
+                <img src={% static 'images/delete1.svg' %} class="w-6 h-6">
+              </button>
+            </form>
             {% elif request.user.is_superuser %}
-            <button class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all"><img src={% static 'images/delete1.svg' %} class="w-6 h-6"></button>
+            <form method="POST" action="{% url 'delete_post' post.id %}" class="inline">
+              {% csrf_token %}
+              <button class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all">
+                <img src={% static 'images/delete1.svg' %} class="w-6 h-6">
+              </button>
+            </form>
             <button class="bg-indigo-500 text-white px-2 py-2 rounded-full font-medium hover:bg-indigo-600 transition-all"><img src={% static 'images/add_friend.svg' %} class="w-6 h-6 pl-0.5"></button>
             {% else %}
             <button class="bg-indigo-500 text-white px-2 py-2 rounded-full font-medium hover:bg-indigo-600 transition-all"><img src={% static 'images/add_friend.svg' %} class="w-6 h-6 pl-0.5"></button>
             {% endif %} 
           </div>
         </div>
-        <h3 class="text-xl font-bold mb-2 text-indigo-800">{{ post.title }}</h3>
+        <h3 class="text-xl font-bold mb-2 text-indigo-800"><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
         <p class="post-content text-gray-700 leading-relaxed break-words">
           {{ post.content }}
         </p>
@@ -177,6 +188,7 @@
     </main>
 
     <!-- Notifications -->
+    <!-- Hello test comment -->
     <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 animate-slide h-fit sticky top-20">
       <h3 class="text-xl font-bold mb-4 text-indigo-700">Notifications</h3>
       <ul class="space-y-3 text-sm text-indigo-600">
@@ -208,6 +220,15 @@
         </form>
       </div>
   </div>
+  {% else %}
+  <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 text-center animate-slide h-fit relative sticky top-20">
+    <h2 class="text-2xl font-bold">Welcome to SocialNetwork</h2>
+    <p class="text-indigo-600 mb-4">Join us and connect with friends!</p>
+    <ul class="space-y-4 text-indigo-700 font-medium">
+      <li><a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition text-white">Register</a></li>
+      <li><a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg transition text-white">Log In</a></li>
+    </ul>
+  {% endif %}
 
   <!-- Footer -->
   <footer class="bg-indigo-700 text-white mt-10 py-6">
