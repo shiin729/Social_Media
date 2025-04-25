@@ -1,20 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class=" d-flex flex-row justify-content-between align-items-center mb-4">
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-            <div class="card-body text-center">
-                <img id="avatarPreview" src="{{ user_avatar }}" alt="Avatar" style="width: 150px; height: 150px; border-radius: 50%;">
-                <p>{{ user_first_name }} {{user_last_name}}</p>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    <title>{{ user_first_name }}</title>
+{% endblock title %}
+
+
+{% block content %}
+    <div class="flex flex-row justify-between items-center mb-2">
+        <div class="rounded-xl bg-white p-10 shadow-lg flex flex-col items-center justify-center">
+            <div class="shadow-sm w-full text-center">
+                <div class="mb-4">
+                    <img id="avatarPreview" src="{{ user_avatar }}" alt="Avatar" class="w-[150px] h-[150px] rounded-full mx-auto">
+                </div>
+                <h1 class="text-xl font-semibold">{{ user_first_name }} {{ user_last_name }}</h1>
+                <p class="text-gray-500 text-sm">@{{ username }}</p>
             </div>
+            <div class="mt-4 flex flex-col space-y-2 w-full items-center">
+                <a href="/add-friend/${user.id}/"
+                   class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-4 rounded transition-colors duration-200 text-sm">
+                    Add Friend
+                </a>
+                <a href="/chat/${user.id}/"
+                   class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-4 rounded transition-colors duration-200 text-sm">
+                    Chat with User
+                </a>
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock content %}
