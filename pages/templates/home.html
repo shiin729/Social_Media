@@ -136,6 +136,9 @@
                 <img src="{% static 'images/clip.svg' %}" alt="Upload Icon" class="w-10 h-10 mb-2 border border-gray-300 rounded-xl p-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                 <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl p-4 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer">
             </div>
+            <div id="preview">
+              
+            </div>
           </div>
           <div class="mt-6">
             <button type="submit" class="w-full py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-all duration-500 transform hover:scale-105 shadow-md hover:shadow-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
@@ -211,5 +214,38 @@
       +
     </button>
   </div>
+
+  <script>
+    document.getElementById('image').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+  
+      const reader = new FileReader();
+  
+      reader.onload = function(e) {
+        const imageDataUrl = e.target.result;
+  
+        // Создаем изображение и вставляем его в div preview
+        const previewElement = document.createElement('img');
+        previewElement.src = imageDataUrl;
+        previewElement.alt = 'Preview';
+        previewElement.classList.add('w-20', 'h-20', 'mt-4', 'mx-auto', 'rounded-xl', 'shadow-md');
+  
+        // Вставляем изображение в div с id "preview"
+        const previewContainer = document.getElementById('preview');
+        previewContainer.innerHTML = ''; // Очищаем контейнер перед вставкой нового изображения
+        previewContainer.appendChild(previewElement);
+  
+        console.log('Base64 картинки:', imageDataUrl);
+      };
+  
+      reader.onerror = function(err) {
+        console.error('Ошибка при чтении изображения:', err);
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  </script>
+
 </body>
 </html>
