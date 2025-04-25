@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Network</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            fade: 'fadeIn 1s ease-in-out',
+            slide: 'slideIn 0.5s ease-out',
+            pulseSlow: 'pulse 3s ease-in-out infinite'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideIn: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            }
+          }
+        }
+      }
+    }
+
+    let menuOpen = false;
+
+    // Функция для переключения бургер-меню
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const burgerIcon = document.getElementById('burger-icon');
+      const closeIcon = document.getElementById('close-icon');
+
+      menu.classList.toggle('hidden');
+      
+      // Переключаем иконки бургер-меню
+      if (menuOpen) {
+        burgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      } else {
+        burgerIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      }
+
+      menuOpen = !menuOpen;
+    }
+
+    // Закрытие меню при клике по ссылке
+    function closeMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.add('hidden');
+      document.getElementById('burger-icon').classList.remove('hidden');
+      document.getElementById('close-icon').classList.add('hidden');
+      menuOpen = false;
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-tr from-indigo-100 via-white to-blue-100 min-h-screen font-sans text-gray-800">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-indigo-700 shadow sticky top-0 z-50 mb-10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between text-white">
+      <a href="{% url 'home' %}" class="text-2xl font-extrabold tracking-wide hover:scale-105 transition-transform duration-300">SocialNetwork</a>
+
+      <!-- Бургер -->
+      <button class="md:hidden" onclick="toggleMenu()">
+        <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Десктоп меню -->
+      <div class="hidden md:flex space-x-6 text-lg">
+        <a href="{% url 'home' %}" class="hover:underline">Home</a>
+        <a href="{% url 'profile' %}" class="hover:underline">Profile</a>
+        <a href="#" class="hover:underline">Messages</a>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition">Log Out</a>
+        <span class="text-sm font-light ml-2">Hi, {{ user.first_name }}</span>
+        {% else %}
+        <a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition">Register</a>
+        <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg transition">Log In</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Мобильное меню -->
+    <div id="mobile-menu" class="md:hidden hidden bg-indigo-700 px-4 py-3 space-y-2 text-white mb-10">
+      <a href="{% url 'home' %}" class="block">Home</a>
+      <a href="{% url 'profile' %}" class="block">Profile</a>
+      <a href="#" class="block">Messages</a>
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'logout' %}" class="block bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Log Out</a>
+      <p class="text-sm mt-2">Hi, {{ user.first_name }}</p>
+      {% else %}
+      <a href="{% url 'register' %}" class="block bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Register</a>
+      <a href="{% url 'login' %}" class="block bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">Log In</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- Main Layout -->
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 animate-fade">
+    <!-- Sidebar -->
+    <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 text-center animate-slide h-fit relative sticky top-20">
+      <img src="{{ user.profile.avatar.url }}" alt="User Profile" class="w-32 h-32 mx-auto rounded-full mb-4 border-4 border-indigo-500">
+      <h2 class="text-2xl font-bold">{{ user.first_name }} {{ user.last_name }}</h2>
+      <p class="text-indigo-600 mb-4">Web Developer</p>
+      <ul class="space-y-4 text-indigo-700 font-medium">
+        <li><a href="{% url 'profile' %}" class="hover:underline">My Profile</a></li>
+        <li><a href="{% url 'friends' %}" class="hover:underline">Friends</a></li>
+        <li><a href="#" class="hover:underline">Group</a></li>
+        <li><a href="{% url 'create_post'%}" class="hover:underline">Create Post</a></li>
+      </ul>
+    </aside>
+
+    <main class="md:col-span-6 sm:col-span-1 space-y-6 animate-fade">
+        <div class="bg-white p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300">
+            <h1>{{ post.title }}</h1>
+            <p class="text-gray-600 mt-2">{{ post.content }}</p>
+            <p class="text-gray-500 text-sm mt-4">Posted by {{ post.user.first_name }} on {{ post.created_at }}</p>
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post Image" class="mt-4 rounded-lg shadow-md w-full h-auto">
+            {% endif %}
+        </div>
+        <div class="comments-section">
+            <h3>Комментарии:</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Добавить комментарий</button>
+                </form>
+                {% if comments %}
+                <ul>
+                    {% for comment in comments %}
+                        <li>
+                            <strong>{{ comment.user.username }}</strong> - {{ comment.created_at|date:"d.m.Y H:i" }}:
+                            <p>{{ comment.text }}</p>
+                            {% if comment.user == user or request.user.is_superuser %}
+                                <form action="{% url 'delete_comment' comment.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all">
+                                        <img src={% static 'images/delete1.svg' %} class="w-6 h-6">
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    <p>Нет комментариев.</p>
+                {% endif %}
+        </div>
+    </main>

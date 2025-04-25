@@ -110,6 +110,7 @@
   </nav>
 
   <!-- Main Layout -->
+  {% if user.is_authenticated %}
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 animate-fade">
     <!-- Sidebar -->
     <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 text-center animate-slide h-fit relative sticky top-20">
@@ -125,9 +126,80 @@
     </aside>
 
     <!-- Main Feed -->
-    <main class="md:col-span-6 sm:col-span-1 space-y-6 animate-fade">
+
+    
+    <main class="md:col-span-6 sm:col-span-1 space-y-6 animate-fade ">
+      <!-- Post Popup -->
+      
+
+      
+
+
+      {% for post in all_posts %}
       <div class="bg-white p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300">
-        <form method="POST" enctype="multipart/form-data">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-4">
+            {% if post.user.profile.avatar %}
+            <img src="{{ post.user.profile.avatar.url }}" alt="Avatar" class="w-14 h-14 rounded-full border-2 border-indigo-400">
+            {% else %}
+            <img src="{% static 'images/default.jpeg' %}" alt="Default Avatar" class="w-14 h-14 rounded-full border-2 border-indigo-400">
+            {% endif %}
+            <div>
+              <a href='profile/{{ post.user.username }}'><h4 class="font-semibold text-lg">{{ post.user.first_name }} {{ post.user.last_name }}</h4></a>
+              <span class="text-gray-500 text-sm">@{{ post.user.username }}</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            {% if post.user == user %}
+            <form method="POST" action="{% url 'delete_post' post.id %}" class="inline">
+              {% csrf_token %}
+              <button class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all">
+                <img src={% static 'images/delete1.svg' %} class="w-6 h-6">
+              </button>
+            </form>
+            {% elif request.user.is_superuser %}
+            <form method="POST" action="{% url 'delete_post' post.id %}" class="inline">
+              {% csrf_token %}
+              <button class="bg-red-500 text-white px-2 py-2 rounded-full font-medium hover:bg-red-600 transition-all">
+                <img src={% static 'images/delete1.svg' %} class="w-6 h-6">
+              </button>
+            </form>
+            <button class="bg-indigo-500 text-white px-2 py-2 rounded-full font-medium hover:bg-indigo-600 transition-all"><img src={% static 'images/add_friend.svg' %} class="w-6 h-6 pl-0.5"></button>
+            {% else %}
+            <button class="bg-indigo-500 text-white px-2 py-2 rounded-full font-medium hover:bg-indigo-600 transition-all"><img src={% static 'images/add_friend.svg' %} class="w-6 h-6 pl-0.5"></button>
+            {% endif %} 
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-indigo-800"><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
+        <p class="post-content text-gray-700 leading-relaxed break-words">
+          {{ post.content }}
+        </p>
+        <p class="text-sm text-gray-400 mt-2">{{ post.created_at }}</p>
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post Image" class="w-full rounded-xl mt-4 shadow-sm">
+        {% endif %}
+        <div class="flex justify-start mt-4 space-x-3 text-gray-500">
+          <div class="w-6 h-6 bg-gray-200 rounded-full"></div>
+          <div class="w-6 h-6 bg-gray-200 rounded-full"></div>
+          <div class="w-6 h-6 bg-gray-200 rounded-full"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </main>
+
+    <!-- Notifications -->
+    <!-- Hello test comment -->
+    <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 animate-slide h-fit sticky top-20">
+      <h3 class="text-xl font-bold mb-4 text-indigo-700">Notifications</h3>
+      <ul class="space-y-3 text-sm text-indigo-600">
+        <li><a href="#" class="hover:underline">Alice Cooper started following you</a></li>
+        <li><a href="#" class="hover:underline">You have a new comment on your post</a></li>
+        <li><a href="#" class="hover:underline">Jane Smith liked your photo</a></li>
+      </ul>
+    </aside>
+    
+    <div id="modal-w"  class="fixed inset-0 bg-white bg-opacity-75 p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300 hidden flex justify-center items-center">
+        <form method="POST" enctype="multipart/form-data" class="w-full max-w-3xl bg-white p-8 rounded-xl shadow-lg">
           {% csrf_token %}
           <div class="flex flex-col w-full relative h-50 rounded-xl p-4 border border-gray-300 focus:outline-solid transition-all duration-300 bg-white shadow-lg">
             <input type="text-bold" name="title" id="title" class="pt-2 pb-2 pl-2 outline-none font-bold" placeholder="Enter your post title" required>
@@ -147,6 +219,7 @@
           </div>
         </form>
       </div>
+<<<<<<< HEAD
       
       {% for post in all_posts %} <!-- POSTSSSSSSSS -->
       <div class="bg-white p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300">
@@ -205,7 +278,18 @@
       {% endif%}
       {% endfor%}
     </aside>
+=======
+>>>>>>> 66080b406daff4537d4bbd736cde57d5ec36d168
   </div>
+  {% else %}
+  <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 text-center animate-slide h-fit relative sticky top-20">
+    <h2 class="text-2xl font-bold">Welcome to SocialNetwork</h2>
+    <p class="text-indigo-600 mb-4">Join us and connect with friends!</p>
+    <ul class="space-y-4 text-indigo-700 font-medium">
+      <li><a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition text-white">Register</a></li>
+      <li><a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg transition text-white">Log In</a></li>
+    </ul>
+  {% endif %}
 
   <!-- Footer -->
   <footer class="bg-indigo-700 text-white mt-10 py-6">
@@ -216,10 +300,33 @@
 
   <!-- Floating Button -->
   <div class="fixed bottom-6 right-6">
-    <button class="bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-all animate-bounce">
+    <button id="popup-pc" class="bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-all animate-bounce">
       +
     </button>
   </div>
+
+  <script>
+    function openModal() {
+        document.getElementById('modal-w').classList.remove('hidden');
+    }
+
+    // Закрытие модального окна (если кликнули вне окна)
+    function closeModal() {
+        document.getElementById('modal-w').classList.add('hidden');
+    }
+
+    // Пример использования
+    document.getElementById('popup-pc').addEventListener('click', openModal);  // Кнопка для открытия
+
+    // Закрытие модального окна при клике вне его
+    document.getElementById('modal-w').addEventListener('click', (e) => {
+        // Проверка, что клик был за пределами формы
+        if (e.target === document.getElementById('modal-w')) {
+            closeModal();  // Закрытие окна
+        }
+    });
+  </script>
+
 
   <script>
     document.getElementById('image').addEventListener('change', function(event) {
