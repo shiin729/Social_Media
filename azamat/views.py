@@ -24,7 +24,7 @@ def delete_avatar(request):
     if request.method == 'POST':
         profile = request.user.profile
         profile.avatar.delete(save=False)
-        profile.avatar = 'avatars/default.jpg'  # Установите аватарку по умолчанию
+        profile.avatar = 'avatars/default.jpg'  
         profile.save()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False}, status=400)
@@ -36,7 +36,7 @@ def create_post(request):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            return redirect('home')  # Перенаправление на главную страницу
+            return redirect('home')  
     else:
         form = PostForm()
     return render(request, 'create_post.html', {'form': form})
