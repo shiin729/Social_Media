@@ -170,7 +170,7 @@
             {% endif %} 
           </div>
         </div>
-        <h3 class="text-xl font-bold mb-2 text-indigo-800"><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
+        <h3 class="text-xl font-bold mb-2 text-indigo-800 break-words"><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
         <p class="post-content text-gray-700 leading-relaxed break-words">
           {{ post.content }}
         </p>
@@ -194,7 +194,10 @@
       {% for post in all_posts %}
       {% if post.user.is_superuser %}
       <div class="mb-6 p-4 bg-indigo-50 rounded-lg shadow-md">
-        <h3 class="text-xl font-bold mb-2 text-indigo-800 break-words">{{ post.title }}</h3>
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post Image" class="w-full rounded-xl mt-4 shadow-sm">
+        {% endif %}
+        <h3 class="text-xl font-bold mb-2 text-indigo-800 break-words"><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
         <p class="post-content text-gray-700 leading-relaxed break-words">
           {{ post.content }}
         </p>
