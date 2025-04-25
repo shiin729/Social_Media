@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block title %}
+      <title>Document</title>
+    {% endblock title %}
+    {% block styles %}{% endblock styles %}
+    {% block scripts %}
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              fade: 'fadeIn 1s ease-in-out',
+              slide: 'slideIn 0.5s ease-out',
+              pulseSlow: 'pulse 3s ease-in-out infinite'
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideIn: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              }
+            }
+          }
+        }
+      }
+  
+      let menuOpen = false;
+  
+      // Функция для переключения бургер-меню
+      function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const burgerIcon = document.getElementById('burger-icon');
+        const closeIcon = document.getElementById('close-icon');
+  
+        menu.classList.toggle('hidden');
+        
+        // Переключаем иконки бургер-меню
+        if (menuOpen) {
+          burgerIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        } else {
+          burgerIcon.classList.add('hidden');
+          closeIcon.classList.remove('hidden');
+        }
+  
+        menuOpen = !menuOpen;
+      }
+  
+      // Закрытие меню при клике по ссылке
+      function closeMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.add('hidden');
+        document.getElementById('burger-icon').classList.remove('hidden');
+        document.getElementById('close-icon').classList.add('hidden');
+        menuOpen = false;
+      }
+    </script>
+    {% endblock scripts %}
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <!-- Навбар -->
+    <nav class="bg-indigo-700 shadow sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between text-white">
+        <a href="{% url 'home' %}" class="text-2xl font-extrabold tracking-wide hover:scale-105 transition-transform duration-300">SocialNetwork</a>
+
+        <!-- Бургер -->
+        <button class="md:hidden" onclick="toggleMenu()">
+          <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <!-- Десктоп меню -->
+        <div class="hidden md:flex space-x-6 text-lg">
+          <a href="{% url 'home' %}" class="hover:underline">Home</a>
+          <a href="{% url 'profile' %}" class="hover:underline">Profile</a>
+          <a href="#" class="hover:underline">Messages</a>
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition">Log Out</a>
+          <span class="text-sm font-light ml-2">Hi, {{ user.first_name }}</span>
+          {% else %}
+          <a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition">Register</a>
+          <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg transition">Log In</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Мобильное меню -->
+      <div id="mobile-menu" class="md:hidden hidden bg-indigo-700 px-4 py-3 space-y-2 text-white">
+        <a href="{% url 'home' %}" class="block">Home</a>
+        <a href="{% url 'profile' %}" class="block">Profile</a>
+        <a href="#" class="block">Messages</a>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="block bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Log Out</a>
+        <p class="text-sm mt-2">Hi, {{ user.first_name }}</p>
+        {% else %}
+        <a href="{% url 'register' %}" class="block bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Register</a>
+        <a href="{% url 'login' %}" class="block bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">Log In</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto mt-6 px-4">
+        {% block content %}{% endblock content %}
+    </main>
+
+    <footer class="bg-indigo-800 text-white py-4 mt-10 text-center">
+        <p>&copy; 2025 SocialNetwork. All rights reserved.</p>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const burgerIcon = document.getElementById('burger-icon');
+        const closeIcon = document.getElementById('close-icon');
+        menu.classList.toggle('hidden');
+        burgerIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      }
+    </script>
+</body>
+</html>

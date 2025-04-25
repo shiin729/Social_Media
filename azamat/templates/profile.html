@@ -19,27 +19,48 @@
       <li><a href="{% url 'friends' %}" class="hover:underline">Friends</a></li>
       <li><a href="#" class="hover:underline">Group</a></li>
       <li><a href="{% url 'create_post'%}" class="hover:underline">Create Post</a></li>
+      <button id="make">Редактировать профиль</button>
+    </ul>
     </ul>
   </aside>
 
   <!-- Правая карточка -->
-  <div class="w-full md:w-2/3 bg-white shadow rounded-lg p-4 text-center">
-    <img id="avatarPreview" src="{{ user.profile.avatar.url }}" alt="Avatar" class="mx-auto mb-4 w-36 h-36 rounded-full object-cover">
-    <p class="mb-4 font-medium">{{ user.first_name }} {{ user.last_name }}</p>
-    <form method="POST" enctype="multipart/form-data" class="space-y-4">
-        {% csrf_token %}
-        <div>
-            {{ form.avatar.label_tag }}
-            <input type="file" id="avatarInput" name="avatar" class="block mx-auto mt-2 text-sm">
-        </div>
-        <button type="button" id="deleteAvatarButton" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Удалить аватарку</button>
-        <br>
-        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700">Сохранить</button>
-    </form>
+    <div class="hidden fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50" id="profileCard" onclick="closeProfileCard(event)">
+        <div class="w-full max-w-lg bg-white shadow-xl rounded-lg p-6 text-center" id="profileCardContent">
+        <img id="avatarPreview" src="{{ user.profile.avatar.url }}" alt="Avatar" class="mx-auto mb-4 w-36 h-36 rounded-full object-cover">
+        <p class="mb-4 font-medium text-xl">{{ user.first_name }} {{ user.last_name }}</p>
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                {{ form.avatar.label_tag }}
+                <input type="file" id="avatarInput" name="avatar" class="block mx-auto mt-2 text-sm">
+            </div>
+            <button type="button" id="deleteAvatarButton" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Удалить аватарку</button>
+            <br>
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700">Сохранить</button>
+        </form>
+    </div>
   </div>
 </div>
 
+</div>
+
 <script>
+    const button = document.getElementById('make');
+    const profileCard = document.getElementById('profileCard');
+
+    button.addEventListener('click', function() {
+        profileCard.classList.toggle('hidden');
+    });
+
+    function closeProfileCard(event) {
+        if (event.target === profileCard) {
+            profileCard.classList.add('hidden');  
+        }
+    }
+
+
+
     const avatarInput = document.getElementById('avatarInput');
     const avatarPreview = document.getElementById('avatarPreview');
 

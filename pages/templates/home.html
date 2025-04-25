@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Social Network</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  {% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
+
   <script>
     tailwind.config = {
       theme: {
@@ -132,10 +132,13 @@
           {% csrf_token %}
           <div class="flex flex-col w-full relative h-50 rounded-xl p-4 border border-gray-300 focus:outline-solid transition-all duration-300 bg-white shadow-lg">
             <input type="text-bold" name="title" id="title" class="pt-2 pb-2 pl-2 outline-none font-bold" placeholder="Enter your post title" required>
-            <textarea name="content" id="content" rows="6" class="mt-4 pl-2 pt-2 outline-none" placeholder="Write something interesting..." required></textarea>
+            <textarea name="content" id="content" rows="6" class="resize-none mt-4 pl-2 pt-2 outline-none" placeholder="Write something interesting..." required></textarea>
             <div class="flex flex-col w-10 h-10 hover:scale-110 transition-transform duration-300 absolute bottom-2 right-2 cursor-pointer">
                 <img src="{% static 'images/clip.svg' %}" alt="Upload Icon" class="w-10 h-10 mb-2 border border-gray-300 rounded-xl p-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl p-4 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer">
+                <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer resize-none" />
+            </div>
+            <div id="preview">
+              
             </div>
           </div>
           <div class="mt-6">
@@ -231,5 +234,38 @@
       +
     </button>
   </div>
+
+  <script>
+    document.getElementById('image').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+  
+      const reader = new FileReader();
+  
+      reader.onload = function(e) {
+        const imageDataUrl = e.target.result;
+  
+        // Создаем изображение и вставляем его в div preview
+        const previewElement = document.createElement('img');
+        previewElement.src = imageDataUrl;
+        previewElement.alt = 'Preview';
+        previewElement.classList.add('w-20', 'h-20', 'mt-4', 'mx-auto', 'rounded-xl', 'shadow-md');
+  
+        // Вставляем изображение в div с id "preview"
+        const previewContainer = document.getElementById('preview');
+        previewContainer.innerHTML = ''; // Очищаем контейнер перед вставкой нового изображения
+        previewContainer.appendChild(previewElement);
+  
+        console.log('Base64 картинки:', imageDataUrl);
+      };
+  
+      reader.onerror = function(err) {
+        console.error('Ошибка при чтении изображения:', err);
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  </script>
+
 </body>
 </html>
