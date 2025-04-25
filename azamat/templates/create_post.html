@@ -1,36 +1,59 @@
 {% extends "base.html" %}
+{% load static %}
+{% block styles %}
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+{% endblock %}
+
 {% block content %}
-<div class=" d-flex flex-row justify-content-between align-items-center mb-4">
-    <div class="col-md-3">
-        <div class="card shadow-sm">
-        <div class="card-body text-center">
-            <img src="{{ user.profile.avatar.url }}" class="rounded-circle mb-3" alt="User Profile" width="120">
-            <h5>{{user.first_name}} {{user.last_name}}</h5>
-            <p class="text-muted">Web Developer</p>
-            <ul>
-            <li>
-                <a href="{% url 'profile' %} ">My Profile</a>
-            </li>
-            <li>
-                <a href="{% url 'friends' %}">Friends</a>
-            </li>
-            <li>
-                <a href="">Group</a>
-            </li>
-            <li>
-                <a href="{% url 'createpost'%}">CreatePost</a>
-            </li>
-            </ul>
+<div class="max-w-7xl mx-auto mt-10 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 animate-fade">
+    <aside class="bg-white rounded-2xl shadow-lg p-6 text-center animate-slide">
+        <img src="{{ user.profile.avatar.url }}" alt="User Profile" class="w-32 h-32 mx-auto rounded-full mb-4 border-4 border-indigo-500">
+        <h2 class="text-2xl font-bold">{{ user.first_name }} {{ user.last_name }}</h2>
+        <p class="text-indigo-600 mb-4">Web Developer</p>
+        <ul class="space-y-4 text-indigo-700 font-medium">
+          <li><a href="{% url 'profile' %}" class="hover:underline">My Profile</a></li>
+          <li><a href="{% url 'friends' %}" class="hover:underline">Friends</a></li>
+          <li><a href="#" class="hover:underline">Group</a></li>
+          <li><a href="{% url 'create_post'%}" class="hover:underline">Create Post</a></li>
+        </ul>
+    </aside>
+    <div class="min-h-screen flex justify-center col-span-2">
+        <div class="col-span-2 bg-white p-10 rounded-xl shadow-2xl space-y-8 max-w-3xl w-full mx-auto">
+            <h1 class="text-4xl font-bold text-gray-800 text-center mb-6">Create a New Post</h1>
+        <div class=" d-flex flex-row justify-content-between align-items-center mb-4">
+            <div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="space-y-6">
+                        <!-- Post Title -->
+                        {% comment %} <div class="flex flex-col">
+                            <label for="title" class="text-lg font-medium text-gray-700 mb-2">Post Title</label>
+                        </div> {% endcomment %}
+    
+                        <!-- Post Content -->
+                        <div class="flex flex-col w-full relative h-50 border border-gray-300 rounded-xl p-4 focus:outline-solid transition-all duration-300">
+                            <input type="text-bold" name="title" id="title" class="pt-2 pb-2 pl-2 outline-none font-bold" placeholder="Enter your post title" required>
+                            <textarea name="content" id="content" rows="6" class="mt-4 pl-2 pt-2 outline-none" placeholder="Write something interesting..." required></textarea>
+                            <div class="flex flex-col w-10 h-10 hover:scale-110 transition-transform duration-300 absolute bottom-2 right-2 cursor-pointer">
+                                <img src="{% static 'images/clip.svg' %}" alt="Upload Icon" class="w-10 h-10 mb-2 border border-gray-300 rounded-xl p-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl p-4 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer">
+                            </div>
+                        </div>
+
+    
+                        <!-- Image Upload (Optional) -->
+    
+                        <!-- Submit Button -->
+                        <div class="mt-6">
+                            <button type="submit" class="w-full py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-all duration-500 transform hover:scale-105 shadow-md hover:shadow-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                Publish Post
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        </div>
-    </div>
-    <div>
-        <h1>Create a Post</h1>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Post</button>
-        </form>
     </div>
 </div>
-{% endblock %}
+{% endblock %}   
