@@ -64,13 +64,16 @@
 </head>
 <body class="bg-gradient-to-tr from-indigo-100 via-white to-blue-100 min-h-screen font-sans text-gray-800">
 
-  <!-- Navigation Bar -->
-  <nav class="bg-indigo-700 shadow sticky top-0 z-50 mb-10">
+  <!-- НАВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВ -->
+  <nav class="bg-gradient-to-r from-indigo-600 to-indigo-800 shadow-lg sticky top-0 z-50 mb-10">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between text-white">
-      <a href="{% url 'home' %}" class="text-2xl font-extrabold tracking-wide hover:scale-105 transition-transform duration-300">SocialNetwork</a>
-
+      <!-- Логотип -->
+      <a href="{% url 'home' %}" class="text-3xl font-extrabold tracking-wide text-white hover:text-indigo-200 transition-colors duration-300">
+        SocialNetwork
+      </a>
+  
       <!-- Бургер -->
-      <button class="md:hidden" onclick="toggleMenu()">
+      <button class="md:hidden p-2 hover:bg-indigo-600 rounded-lg transition-colors" onclick="toggleMenu()">
         <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
@@ -78,36 +81,39 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
-
+  
       <!-- Десктоп меню -->
-      <div class="hidden md:flex space-x-6 text-lg">
-        <a href="{% url 'home' %}" class="hover:underline">Home</a>
-        <a href="{% url 'profile' %}" class="hover:underline">Profile</a>
-        <a href="#" class="hover:underline">Messages</a>
+      <div class="hidden md:flex space-x-8 text-lg items-center">
+        <a href="{% url 'home' %}" class="hover:text-indigo-200 transition-colors duration-200">Home</a>
+        <a href="{% url 'profile' %}" class="hover:text-indigo-200 transition-colors duration-200">Profile</a>
+        <a href="#" class="hover:text-indigo-200 transition-colors duration-200">Messages</a>
+  
         {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition">Log Out</a>
-        <span class="text-sm font-light ml-2">Hi, {{ user.first_name }}</span>
+        <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg transition-all duration-300">Log Out</a>
         {% else %}
-        <a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition">Register</a>
-        <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg transition">Log In</a>
+        <a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg transition-all duration-300">Register</a>
+        <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg transition-all duration-300">Log In</a>
         {% endif %}
       </div>
     </div>
-
+  
     <!-- Мобильное меню -->
-    <div id="mobile-menu" class="md:hidden hidden bg-indigo-700 px-4 py-3 space-y-2 text-white mb-10">
-      <a href="{% url 'home' %}" class="block">Home</a>
-      <a href="{% url 'profile' %}" class="block">Profile</a>
-      <a href="#" class="block">Messages</a>
+    <div id="mobile-menu" class="md:hidden hidden bg-indigo-700 px-4 py-3 space-y-3 text-white mb-10">
+      <a href="{% url 'home' %}" class="block text-lg hover:bg-indigo-600 px-4 py-2 rounded-lg transition-colors duration-300">Home</a>
+      <a href="{% url 'profile' %}" class="block text-lg hover:bg-indigo-600 px-4 py-2 rounded-lg transition-colors duration-300">Profile</a>
+      <a href="#" class="block text-lg hover:bg-indigo-600 px-4 py-2 rounded-lg transition-colors duration-300">Messages</a>
+  
       {% if request.user.is_authenticated %}
-      <a href="{% url 'logout' %}" class="block bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Log Out</a>
-      <p class="text-sm mt-2">Hi, {{ user.first_name }}</p>
+      <a href="{% url 'logout' %}" class="block bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg transition-all duration-300">Log Out</a>
+      <p class="text-sm mt-2 text-center">Hi, {{ user.first_name }}</p>
       {% else %}
-      <a href="{% url 'register' %}" class="block bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Register</a>
-      <a href="{% url 'login' %}" class="block bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">Log In</a>
+      <a href="{% url 'register' %}" class="block bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg transition-all duration-300">Register</a>
+      <a href="{% url 'login' %}" class="block bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg transition-all duration-300">Log In</a>
       {% endif %}
     </div>
-  </nav>
+  </nav> <!-- НАВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВВ -->
+  
+  
 
   <!-- Main Layout -->
   {% if user.is_authenticated %}
@@ -126,29 +132,15 @@
     </aside>
 
     <!-- Main Feed -->
-    <main class="md:col-span-6 sm:col-span-1 space-y-6 animate-fade">
-      <div class="bg-white p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300">
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="flex flex-col w-full relative h-50 rounded-xl p-4 border border-gray-300 focus:outline-solid transition-all duration-300 bg-white shadow-lg">
-            <input type="text-bold" name="title" id="title" class="pt-2 pb-2 pl-2 outline-none font-bold" placeholder="Enter your post title" required>
-            <textarea name="content" id="content" rows="6" class="resize-none mt-4 pl-2 pt-2 outline-none" placeholder="Write something interesting..." required></textarea>
-            <div class="flex flex-col w-10 h-10 hover:scale-110 transition-transform duration-300 absolute bottom-2 right-2 cursor-pointer">
-                <img src="{% static 'images/clip.svg' %}" alt="Upload Icon" class="w-10 h-10 mb-2 border border-gray-300 rounded-xl p-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer resize-none" />
-            </div>
-            <div id="preview">
-              
-            </div>
-          </div>
-          <div class="mt-6">
-            <button type="submit" class="w-full py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-all duration-500 transform hover:scale-105 shadow-md hover:shadow-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                Publish Post
-            </button>
-          </div>
-        </form>
-      </div>
+
+    
+    <main class="md:col-span-6 sm:col-span-1 space-y-6 animate-fade ">
+      <!-- Post Popup -->
       
+
+      
+
+
       {% for post in all_posts %}
       <div class="bg-white p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300">
         <div class="flex items-center justify-between mb-4">
@@ -184,7 +176,7 @@
             {% endif %} 
           </div>
         </div>
-        <h3 class="text-xl font-bold mb-2 text-indigo-800"><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
+        <h3 class="text-xl font-bold mb-2 text-indigo-800 break-words"><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
         <p class="post-content text-gray-700 leading-relaxed break-words">
           {{ post.content }}
         </p>
@@ -193,7 +185,9 @@
         <img src="{{ post.image.url }}" alt="Post Image" class="w-full rounded-xl mt-4 shadow-sm">
         {% endif %}
         <div class="flex justify-start mt-4 space-x-3 text-gray-500">
-          <div class="w-6 h-6 bg-gray-200 rounded-full"></div>
+          <button id="copyButton" class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 opacity-0">
+            <img src="{% static 'images/copy.svg' %}" alt="copy">
+          </button>
           <div class="w-6 h-6 bg-gray-200 rounded-full"></div>
           <div class="w-6 h-6 bg-gray-200 rounded-full"></div>
         </div>
@@ -204,13 +198,44 @@
     <!-- Notifications -->
     <!-- Hello test comment -->
     <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 animate-slide h-fit sticky top-20">
-      <h3 class="text-xl font-bold mb-4 text-indigo-700">Notifications</h3>
-      <ul class="space-y-3 text-sm text-indigo-600">
-        <li><a href="#" class="hover:underline">Alice Cooper started following you</a></li>
-        <li><a href="#" class="hover:underline">You have a new comment on your post</a></li>
-        <li><a href="#" class="hover:underline">Jane Smith liked your photo</a></li>
-      </ul>
+      <h3 class="text-xl font-bold mb-4 text-indigo-700">Новости</h3>
+      {% for post in all_posts %}
+      {% if post.user.is_superuser %}
+      <div class="mb-6 p-4 bg-indigo-50 rounded-lg shadow-md">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post Image" class="w-full rounded-xl mt-4 shadow-sm">
+        {% endif %}
+        <h3 class="text-xl font-bold mb-2 text-indigo-800 break-words"><a href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
+        <p class="post-content text-gray-700 leading-relaxed break-words">
+          {{ post.content }}
+        </p>
+        <p class="text-sm text-gray-400 mt-2">{{ post.created_at }}</p>
+      </div>
+      {% endif%}
+      {% endfor%}
     </aside>
+    
+    <div id="modal-w"  class="fixed inset-0 bg-white bg-opacity-75 p-6 rounded-2xl shadow-lg animate-slide hover:shadow-xl transition-shadow duration-300 hidden flex justify-center items-center">
+        <form method="POST" enctype="multipart/form-data" class="w-full max-w-3xl bg-white p-8 rounded-xl shadow-lg">
+          {% csrf_token %}
+          <div class="flex flex-col w-full relative h-50 rounded-xl p-4 border border-gray-300 focus:outline-solid transition-all duration-300 bg-white shadow-lg">
+            <input type="text-bold" name="title" id="title" class="pt-2 pb-2 pl-2 outline-none font-bold" placeholder="Enter your post title" required>
+            <textarea name="content" id="content" rows="6" class="resize-none mt-4 pl-2 pt-2 outline-none" placeholder="Write something interesting..." required></textarea>
+            <div class="flex flex-col w-10 h-10 hover:scale-110 transition-transform duration-300 absolute bottom-2 right-2 cursor-pointer">
+                <img src="{% static 'images/clip.svg' %}" alt="Upload Icon" class="w-10 h-10 mb-2 border border-gray-300 rounded-xl p-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                <input type="file" name="image" id="image" accept="image/*" class="w-10 h-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300 absolute opacity-0 cursor-pointer resize-none" />
+            </div>
+            <div id="preview">
+              
+            </div>
+          </div>
+          <div class="mt-6">
+            <button type="submit" class="w-full py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-all duration-500 transform hover:scale-105 shadow-md hover:shadow-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                Publish Post
+            </button>
+          </div>
+        </form>
+      </div>
   </div>
   {% else %}
   <aside class="md:col-span-3 sm:col-span-2 bg-white rounded-2xl shadow-lg p-6 text-center animate-slide h-fit relative sticky top-20">
@@ -231,10 +256,47 @@
 
   <!-- Floating Button -->
   <div class="fixed bottom-6 right-6">
-    <button class="bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-all animate-bounce">
+    <button id="popup-pc" class="bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-all animate-bounce">
       +
     </button>
   </div>
+
+  <script>
+    document.getElementById('copyButton').addEventListener('click', function() {
+      // Находим скрытое поле, содержащее ссылку
+      var link = document.getElementById('linkToCopy').value;
+      
+      // Копируем ссылку в буфер обмена с помощью нового API
+      navigator.clipboard.writeText("http://127.0.0.1:8000/" + link).then(function() {
+      }).catch(function(err) {
+          console.error('Ошибка при копировании:', err);
+      });
+    });
+  </script>
+
+
+  <script>
+    function openModal() {
+        document.getElementById('modal-w').classList.remove('hidden');
+    }
+
+    // Закрытие модального окна (если кликнули вне окна)
+    function closeModal() {
+        document.getElementById('modal-w').classList.add('hidden');
+    }
+
+    // Пример использования
+    document.getElementById('popup-pc').addEventListener('click', openModal);  // Кнопка для открытия
+
+    // Закрытие модального окна при клике вне его
+    document.getElementById('modal-w').addEventListener('click', (e) => {
+        // Проверка, что клик был за пределами формы
+        if (e.target === document.getElementById('modal-w')) {
+            closeModal();  // Закрытие окна
+        }
+    });
+  </script>
+
 
   <script>
     document.getElementById('image').addEventListener('change', function(event) {
