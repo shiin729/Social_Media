@@ -55,3 +55,8 @@ class Comment(models.Model):
     def __str__(self):
         return f'Comment by {self.user.username} on {self.created_at}'
 
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
