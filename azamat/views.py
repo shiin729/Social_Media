@@ -7,6 +7,11 @@ from .forms import PostForm
 from .models import Post, Comment
 from .forms import CommentForm
 from django.contrib import messages
+from rest_framework.viewsets import ModelViewSet
+from .serializers import PostSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.response import Response
+from rest_framework import status
 
 def profile(request):
     if request.method == 'POST':
@@ -80,3 +85,18 @@ def delete_comment(request, comment_id):
     comment.delete()
     messages.success(request, 'Комментарий успешно удален.')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+class PostViewSet(ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Устанавливаем текущего пользователя как автора поста
+        
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            print(serializer.errors)  # Логируем ошибки сериализации
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return super().create(request, *args, **kwargs)

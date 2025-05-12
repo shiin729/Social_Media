@@ -21,6 +21,12 @@ from stepanflow.views import ribbon
 from django.conf.urls.static import static
 from django.conf import settings
 from azamat.views import profile, delete_avatar, create_post, delete_post, post_page, delete_comment
+from rest_framework.routers import DefaultRouter
+from azamat.views import PostViewSet
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+router = DefaultRouter()
+router.register(r'posts', PostViewSet, basename='post')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,4 +45,6 @@ urlpatterns = [
     path('delete-post/<int:post_id>/', delete_post, name='delete_post'),
     path('post/<slug:post_slug>/', post_page, name='post'),
     path('comments/delete/<int:comment_id>/', delete_comment, name='delete_comment'),
+    path('api/', include(router.urls)),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
